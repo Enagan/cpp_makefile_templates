@@ -50,10 +50,6 @@ print-%: ; @echo $*=$($*)
 SHELL = /bin/bash
 # Clear built-in rules
 .SUFFIXES:
-# Programs for installation
-INSTALL = install
-INSTALL_PROGRAM = $(INSTALL)
-INSTALL_DATA = $(INSTALL) -m 644
 
 # Append pkg-config specific libraries if need be
 ifneq ($(LIBS),)
@@ -75,7 +71,6 @@ release: export BIN_PATH := $(BUILD_ROOT)/bin/release
 release: export ALL_INCLUDES := $(INCLUDES)
 debug: export BIN_PATH := $(BUILD_ROOT)/bin/debug
 debug: export ALL_INCLUDES := $(INCLUDES)
-install: export BIN_PATH := bin/release
 
 # Combine compiler and linker flags
 release: export PROJECT_SPECIFIC_CXXFLAGS := $(CXXFLAGS) $(COMPILE_FLAGS) $(RCOMPILE_FLAGS)
