@@ -1,8 +1,6 @@
 #### PROJECT SETTINGS ####
 # Where this makefile is running from
 BUILD_ROOT=$(shell pwd)
-# Unique name in all caps to append to specific flags (to avoid collision with any other system flags)
-UNIQUE_PROJECT_NAME :=
 # The name of the executable to be created
 BIN_NAME :=
 # Compiler used
