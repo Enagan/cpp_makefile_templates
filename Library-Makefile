@@ -1,10 +1,8 @@
 #### PROJECT SETTINGS ####
 # Where this makefile is running from
 BUILD_ROOT=$(shell pwd)
-# Unique name in all caps to append to specific flags (to avoid collision with any other system flags)
-UNIQUE_PROJECT_NAME :=
 # The name of the executable to be created
-BIN_NAME :=
+LIB_NAME :=
 # Compiler used
 CXX ?= g++
 # Ar settings to build the library
@@ -22,19 +20,13 @@ SRC_PATH = src
 # Path to the include directory, relative to the makefile
 INCL_PATH = include
 # General compiler flags
-COMPILE_FLAGS = -std=c++14 -Wall -Wextra -g
+COMPILE_FLAGS = -std=c++14 -Wall -Wextra -Werror -g
 # Additional release-specific flags
 RCOMPILE_FLAGS = -D NDEBUG
 # Additional debug-specific flags
 DCOMPILE_FLAGS = -D DEBUG
 # Add additional include paths
-INCLUDES = -I $(INCL_PATH) -I $(BUILD_ROOT)/build/deps/include
-# General linker settings
-LINK_FLAGS =
-# Additional release-specific linker settings
-RLINK_FLAGS =
-# Additional debug-specific linker settings
-DLINK_FLAGS =
+INCLUDES = -I $(INCL_PATH)
 # Destination directory, like a jail or mounted system
 DESTDIR = /
 # Install path (bin/ is appended automatically)
@@ -178,15 +170,15 @@ clean:
 	@$(RM) -rf bin
 
 # Main rule, checks the executable and symlinks to the output
-all: $(BIN_PATH)/$(BIN_NAME)
+all: $(BIN_PATH)/$(LIB_NAME)
 	@echo "Bundling Includes & Deps: $< -> $@"
 	@cp -vrf $(BUILD_PATH)/deps/. $(BIN_PATH) 1>>/dev/null
 
 # Link the executable
-$(BIN_PATH)/$(BIN_NAME): $(OBJECTS)
+$(BIN_PATH)/$(LIB_NAME): $(OBJECTS)
 	@echo "Linking: $@"
-	@$(AR) $(ARFLAGS) $(BIN_PATH)/lib/$(BIN_NAME).a $(OBJECTS) 1>>/dev/null
-	@$(RANLIB) $(BIN_PATH)/lib/$(BIN_NAME).a  1>>/dev/null
+	@$(AR) $(ARFLAGS) $(BIN_PATH)/lib/$(LIB_NAME).a $(OBJECTS) 1>>/dev/null
+	@$(RANLIB) $(BIN_PATH)/lib/$(LIB_NAME).a  1>>/dev/null
 
 # Add dependency files, if they exist
 -include $(DEPS)
